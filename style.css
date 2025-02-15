@@ -26,7 +26,6 @@ body {
   height: 65vmin;
   width: 70vmin;
   background-color: #339af0;
-  box-sizing: 1px 1px 32px #999;
   border-radius: 6px;
 }
 
@@ -50,37 +49,30 @@ body {
   height: 100%;
   width: 100%;
   border-radius: 0 0 6px 6px;
-  padding: 8px 2px 2px 2px;
 }
 
 .playground .food {
   width: 20px;
   height: 18px;
+  box-shadow: 0px 0px 12px hsla(0, 0%, 47%, 0.5);
   background-color: red;
   border-radius: 50%;
   position: relative;
-  box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.playground .head {
-  background-color: #40c057;
-  border: 1px solid #333;
-  z-index: 999;
 }
 
 .food::before {
   content: "";
   width: 4px;
-  height: 8px;
+  height: 4px;
   background-color: brown;
   position: absolute;
-  top: -8px;
+  top: -4px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 5px;
 }
 
-.food::after {
+/* .food::after {
   content: "";
   width: 12px;
   height: 6px;
@@ -90,4 +82,53 @@ body {
   left: 50%;
   transform: translateX(-50%) rotate(-20deg);
   border-radius: 50%;
+} */
+
+.playground .head {
+  background-color: #40c057;
+  z-index: 99;
+  border: 1px solid green;
+  box-shadow: 0px 0px 12px hsla(0, 0%, 47%, 0.5);
+}
+
+.playground .mouth {
+  position: relative;
+  border: 1px solid #40c057;
+  z-index: 999;
+}
+
+.mouth::after {
+  content: ".";
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  font-weight: 900;
+  font-size: 12px;
+  height: 6px;
+  width: 6px;
+  position: absolute;
+  top: 0px;
+  right: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  transform: rotate(111deg);
+}
+
+.mouth::before {
+  content: ".";
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  font-weight: 900;
+  font-size: 12px;
+  height: 6px;
+  width: 6px;
+  position: absolute;
+  bottom: 0px;
+  right: 2px;
+  transform: rotate(111deg);
+  background-color: #fff;
+  border-radius: 50%;
+  text-align: center;
 }
