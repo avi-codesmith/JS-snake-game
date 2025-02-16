@@ -5,6 +5,8 @@ const pandpIcon = document.querySelector(".pandpIcon");
 const soundIcon = document.querySelector(".soundIcon");
 let scoreEl = document.querySelector(".numberScore");
 let highScoreEl = document.querySelector(".numberHighScore");
+let arrow = document.querySelector(".arrowkeys-wrapper");
+let para = document.querySelector(".para");
 
 let foodX, foodY;
 let headX = Math.floor(Math.random() * 30) + 1;
@@ -22,6 +24,15 @@ let sound = true;
 
 let highScore = localStorage.getItem("highScore") || 0;
 highScoreEl.innerHTML = highScore;
+
+window.onload = () => {
+  let arrow = document.querySelector(".arrowkeys"); // Corrected class name
+
+  setTimeout(() => {
+    arrow.classList.add("displayNone"); // Wrapped class name in quotes
+    para.classList.add("displayNone"); // Wrapped class name in quotes
+  }, 4000);
+};
 
 const random = () => {
   foodX = Math.floor(Math.random() * 30) + 1;

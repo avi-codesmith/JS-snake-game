@@ -43,13 +43,17 @@ body {
   width: 164px;
 }
 
-.arrowkeys-wrapper::after {
-  content: "Use Arrow Keys To Move The Snake";
+.para {
   color: #fff;
   position: absolute;
   top: 58%;
   left: 11%;
   font-size: 18px;
+  opacity: 1;
+}
+
+.displayNone {
+  display: none;
 }
 
 .header {
