@@ -1,6 +1,8 @@
 "use strict";
 
 const playground = document.querySelector(".playground");
+const pandpIcon = document.querySelector(".pandpIcon");
+const soundIcon = document.querySelector(".soundIcon");
 let scoreEl = document.querySelector(".numberScore");
 let highScoreEl = document.querySelector(".numberHighScore");
 
@@ -15,6 +17,8 @@ let eatSound = new Audio("./eat.mp3");
 let loseSound = new Audio("./lose.mp3");
 let gameloop;
 let score = 0;
+let isPlaying = true;
+let sound = true;
 
 let highScore = localStorage.getItem("highScore") || 0;
 highScoreEl.innerHTML = highScore;
@@ -41,7 +45,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 const initGame = () => {
-  let htmlMarkup = `<div class="food" style="grid-area: ${foodY} / ${foodX};"></div>`;
+  let htmlMarkup = `
+    <div class="food" style="grid-area: ${foodY} / ${foodX};"></div>
+  `;
 
   headX += velocityX;
   headY += velocityY;
@@ -49,7 +55,9 @@ const initGame = () => {
   if (headX === foodX && headY === foodY) {
     random();
     snakeBody.push([headX, headY]);
-    eatSound.play();
+    if (sound) {
+      eatSound.play();
+    }
     score++;
     scoreEl.innerHTML = score;
 
@@ -67,8 +75,11 @@ const initGame = () => {
 
   for (let i = 0; i < snakeBody.length; i++) {
     let className = i === 0 ? "head mouth" : "head";
-    htmlMarkup += `<div class="${className}" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]};"></div>`;
-
+    htmlMarkup += `
+      <div
+        class="${className}"
+        style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]};"
+      ></div>`;
     if (
       i !== 0 &&
       snakeBody[0][1] === snakeBody[i][1] &&
@@ -88,7 +99,9 @@ const initGame = () => {
 const gameOver = () => {
   playground.style.backgroundColor = "#fa5252";
   gameover = true;
-  loseSound.play();
+  if (sound) {
+    loseSound.play();
+  }
   clearInterval(gameloop);
 
   setTimeout(() => {
@@ -99,3 +112,49 @@ const gameOver = () => {
 
 random();
 gameloop = setInterval(initGame, 150);
+
+pandpIcon.addEventListener("click", () => {
+  if (isPlaying) {
+    clearInterval(gameloop); // Stop the game
+    pandpIcon.src = "play-button.png";
+  } else {
+    gameloop = setInterval(initGame, 150);
+    pandpIcon.src = "pause.png";
+  }
+  isPlaying = !isPlaying;
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.code === "Space") {
+    if (isPlaying) {
+      clearInterval(gameloop); // Stop the game
+      pandpIcon.src = "play-button.png";
+    } else {
+      gameloop = setInterval(initGame, 150);
+      pandpIcon.src = "pause.png";
+    }
+    isPlaying = !isPlaying;
+  }
+});
+
+soundIcon.addEventListener("click", () => {
+  if (sound) {
+    sound = false;
+    soundIcon.src = "music.png";
+  } else if (sound === false) {
+    sound = true;
+    soundIcon.src = "volume.png";
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "KeyM") {
+    if (sound) {
+      sound = false;
+      soundIcon.src = "music.png";
+    } else if (sound === false) {
+      sound = true;
+      soundIcon.src = "volume.png";
+    }
+  }
+});
