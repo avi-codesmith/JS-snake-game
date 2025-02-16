@@ -5,7 +5,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -13,8 +12,16 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #ddd;
+  background-color: rgba(221, 221, 221, 66); /* Adjust opacity here */
   position: relative;
+  background-image: linear-gradient(
+      rgba(38, 38, 38, 0.7),
+      rgba(38, 38, 38, 0.7)
+    ),
+    url(snake.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply; /* or overlay */
 }
 
 .container {
@@ -23,18 +30,35 @@ body {
   justify-content: center;
   flex-direction: column;
   width: 600px;
-  box-shadow: 1px 1px 32px #999;
   height: 65vmin;
   width: 70vmin;
-  background-color: #339af0;
   border-radius: 6px;
+}
+
+.arrowkeys {
+  position: absolute;
+  top: 40%;
+  left: 15%;
+  height: 164px;
+  width: 164px;
+}
+
+.arrowkeys-wrapper::after {
+  content: "Use Arrow Keys To Move The Snake";
+  color: #fff;
+  position: absolute;
+  top: 58%;
+  left: 11%;
+  font-size: 18px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #eee;
+  box-shadow: 0px 0px 32px #333;
+
+  background-color: rgba(235, 235, 235, 0.8);
   padding: 14px 26px;
   color: #228be6;
   border: 2px solid #339af0;
@@ -44,7 +68,8 @@ body {
 }
 
 .playground {
-  background-color: #339af0, #4169e1;
+  background-color: rgba(51, 155, 240, 0.9);
+  /* background-color: rgba(38, 38, 38, 0.9); */
   display: grid;
   grid-template: repeat(30, 1fr) / repeat(30, 1fr);
   height: 100%;
@@ -117,8 +142,7 @@ body {
   height: 32px;
   width: 32px;
   cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(26%) sepia(73%) saturate(2082%)
-    hue-rotate(217deg) brightness(94%) contrast(92%);
+  filter: brightness(0) invert(100%);
 }
 
 .popupSound,
@@ -126,7 +150,7 @@ body {
   position: absolute;
   top: 8%;
   right: 5%;
-  color: #555;
+  color: #fff;
 }
 
 .popup {

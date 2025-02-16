@@ -97,7 +97,7 @@ const initGame = () => {
 };
 
 const gameOver = () => {
-  playground.style.backgroundColor = "#fa5252";
+  playground.style.backgroundColor = " rgba(250, 82, 82, 0.9)";
   gameover = true;
   if (sound) {
     loseSound.play();
