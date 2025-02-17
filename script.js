@@ -2,12 +2,13 @@
 
 const playground = document.querySelector(".playground");
 const pandpIcon = document.querySelector(".pandpIcon");
+const againIcon = document.querySelector(".againIcon");
 const soundIcon = document.querySelector(".soundIcon");
+let selectEl = document.querySelector("select");
 let scoreEl = document.querySelector(".numberScore");
 let highScoreEl = document.querySelector(".numberHighScore");
 let arrow = document.querySelector(".arrowkeys-wrapper");
 let para = document.querySelector(".para");
-
 let foodX, foodY;
 let headX = Math.floor(Math.random() * 30) + 1;
 let headY = Math.floor(Math.random() * 30) + 1;
@@ -21,18 +22,29 @@ let gameloop;
 let score = 0;
 let isPlaying = true;
 let sound = true;
+let speed = 150; // Default speed
 
 let highScore = localStorage.getItem("highScore") || 0;
 highScoreEl.innerHTML = highScore;
 
 window.onload = () => {
-  let arrow = document.querySelector(".arrowkeys"); // Corrected class name
+  let arrow = document.querySelector(".arrowkeys");
 
   setTimeout(() => {
-    arrow.classList.add("displayNone"); // Wrapped class name in quotes
-    para.classList.add("displayNone"); // Wrapped class name in quotes
+    arrow.classList.add("displayNone");
+    para.classList.add("displayNone");
   }, 4000);
 };
+
+againIcon.addEventListener("click", () => {
+  location.reload();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "KeyN") {
+    location.reload();
+  }
+});
 
 const random = () => {
   foodX = Math.floor(Math.random() * 30) + 1;
@@ -40,6 +52,19 @@ const random = () => {
 };
 
 document.addEventListener("keydown", (e) => {
+  // selectEl.classList.add("non");
+  if (
+    e.key === "ArrowUp" ||
+    e.key === "ArrowDown" ||
+    e.key === "ArrowLeft" ||
+    e.key === "ArrowRight"
+  ) {
+    selectEl.classList.add("dull");
+    selectEl.disabled = true;
+    selectEl.title =
+      "Play new game to change difficulty, Can not change difficulty while playing";
+  }
+
   if (e.key === "ArrowUp" && velocityY === 0) {
     velocityX = 0;
     velocityY = -1;
@@ -121,15 +146,39 @@ const gameOver = () => {
   }, 100);
 };
 
+if (selectEl) {
+  selectEl.addEventListener("change", () => {
+    let selectedValue = selectEl.value;
+    // selectEl.classList.add("non");
+    selectEl.disabled = true;
+    selectEl.classList.add("dull");
+    selectEl.title =
+      "Play new game to change difficulty, Can not change difficulty while playing";
+
+    if (selectedValue === "Easy") {
+      speed = 150;
+    } else if (selectedValue === "Medium") {
+      speed = 80;
+    } else if (selectedValue === "Hard") {
+      speed = 60;
+    }
+
+    clearInterval(gameloop);
+    gameloop = setInterval(initGame, speed);
+
+    selectEl.blur();
+  });
+}
+
 random();
-gameloop = setInterval(initGame, 150);
+gameloop = setInterval(initGame, speed);
 
 pandpIcon.addEventListener("click", () => {
   if (isPlaying) {
-    clearInterval(gameloop); // Stop the game
+    clearInterval(gameloop);
     pandpIcon.src = "play-button.png";
   } else {
-    gameloop = setInterval(initGame, 150);
+    gameloop = setInterval(initGame, speed);
     pandpIcon.src = "pause.png";
   }
   isPlaying = !isPlaying;
@@ -138,10 +187,10 @@ pandpIcon.addEventListener("click", () => {
 document.addEventListener("keyup", (e) => {
   if (e.code === "Space") {
     if (isPlaying) {
-      clearInterval(gameloop); // Stop the game
+      clearInterval(gameloop);
       pandpIcon.src = "play-button.png";
     } else {
-      gameloop = setInterval(initGame, 150);
+      gameloop = setInterval(initGame, speed);
       pandpIcon.src = "pause.png";
     }
     isPlaying = !isPlaying;

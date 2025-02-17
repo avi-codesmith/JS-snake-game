@@ -4,7 +4,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
 }
+
+::selection {
+  background-color: rgb(27, 161, 27);
+  color: #fff;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -33,6 +40,10 @@ body {
   height: 65vmin;
   width: 70vmin;
   border-radius: 6px;
+}
+
+.score {
+  width: 80px;
 }
 
 .arrowkeys {
@@ -139,7 +150,8 @@ body {
 }
 
 .soundIcon,
-.pandpIcon {
+.pandpIcon,
+.againIcon {
   position: absolute;
   top: 8%;
   right: 2%;
@@ -150,6 +162,7 @@ body {
 }
 
 .popupSound,
+.popupAgain,
 .popup {
   position: absolute;
   top: 8%;
@@ -163,4 +176,28 @@ body {
 
 .pandpIcon {
   top: 2%;
+}
+
+.popupAgain {
+  top: 14.2%;
+}
+
+.againIcon {
+  top: 14%;
+}
+
+select {
+  background-color: rgba(235, 235, 235, 0.8);
+  border: 1px solid #228be6;
+  padding: 2px 6px;
+  color: #228be6;
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+}
+
+.dull {
+  filter: invert(20%);
+  cursor: not-allowed;
 }
