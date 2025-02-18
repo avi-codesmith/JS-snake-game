@@ -4,6 +4,8 @@ const playground = document.querySelector(".playground");
 const pandpIcon = document.querySelector(".pandpIcon");
 const againIcon = document.querySelector(".againIcon");
 const soundIcon = document.querySelector(".soundIcon");
+const inputColor = document.querySelector(".inputColorIcon");
+const highScoreWrapper = document.querySelector(".highscoreWrapper");
 let selectEl = document.querySelector("select");
 let scoreEl = document.querySelector(".numberScore");
 let highScoreEl = document.querySelector(".numberHighScore");
@@ -18,15 +20,23 @@ let snakeBody = [];
 let gameover = false;
 let eatSound = new Audio("./eat.mp3");
 let loseSound = new Audio("./lose.mp3");
+let moveSound = new Audio("./snakemove.mp3");
+let highScoreSound = new Audio("./highscore.mp3");
 let gameloop;
 let score = 0;
 let isPlaying = true;
 let sound = true;
-let speed = 150; // Default speed
+let speed = 150;
+let highScoreTriggered = false;
+
+let ChangedColor = inputColor.value;
+
+inputColor.addEventListener("input", () => {
+  ChangedColor = inputColor.value;
+});
 
 let highScore = localStorage.getItem("highScore") || 0;
 highScoreEl.innerHTML = highScore;
-
 window.onload = () => {
   let arrow = document.querySelector(".arrowkeys");
 
@@ -47,12 +57,11 @@ document.addEventListener("keydown", (e) => {
 });
 
 const random = () => {
-  foodX = Math.floor(Math.random() * 30) + 1;
-  foodY = Math.floor(Math.random() * 30) + 1;
+  foodX = Math.floor(Math.random() * 1) + 15;
+  foodY = Math.floor(Math.random() * 1) + 15;
 };
 
 document.addEventListener("keydown", (e) => {
-  // selectEl.classList.add("non");
   if (
     e.key === "ArrowUp" ||
     e.key === "ArrowDown" ||
@@ -63,6 +72,13 @@ document.addEventListener("keydown", (e) => {
     selectEl.disabled = true;
     selectEl.title =
       "Play new game to change difficulty, Can not change difficulty while playing";
+    if (sound) {
+      moveSound.play();
+    }
+    inputColor.disabled = "true";
+    inputColor.style.cursor = "not-allowed";
+    inputColor.title =
+      "Play new game to change snake's colour, Can not change Snake's color while playing";
   }
 
   if (e.key === "ArrowUp" && velocityY === 0) {
@@ -99,8 +115,22 @@ const initGame = () => {
 
     if (score > highScore) {
       highScore = score;
-      localStorage.setItem("highScore", highScore);
       highScoreEl.innerHTML = highScore;
+      localStorage.setItem("highScore", highScore);
+
+      if (!highScoreTriggered) {
+        // Run only once
+        highScoreTriggered = true;
+
+        setTimeout(() => {
+          highScoreSound.play();
+          highScoreWrapper.classList.add("visible");
+
+          setTimeout(() => {
+            highScoreWrapper.classList.remove("visible");
+          }, 1800);
+        }, 1800);
+      }
     }
   }
 
@@ -114,15 +144,15 @@ const initGame = () => {
     htmlMarkup += `
       <div
         class="${className}"
-        style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]};"
+        style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}; background-color:${ChangedColor};"
       ></div>`;
-    if (
-      i !== 0 &&
-      snakeBody[0][1] === snakeBody[i][1] &&
-      snakeBody[0][0] === snakeBody[i][0]
-    ) {
-      gameOver();
-    }
+    // if (
+    //   i !== 0 &&
+    //   snakeBody[0][1] === snakeBody[i][1] &&
+    //   snakeBody[0][0] === snakeBody[i][0]
+    // ) {
+    //   gameOver();
+    // }
   }
 
   playground.innerHTML = htmlMarkup;
@@ -133,7 +163,7 @@ const initGame = () => {
 };
 
 const gameOver = () => {
-  playground.style.backgroundColor = " rgba(250, 82, 82, 0.9)";
+  playground.style.backgroundColor = "rgba(250, 82, 82, 0.9)";
   gameover = true;
   if (sound) {
     loseSound.play();
@@ -149,11 +179,6 @@ const gameOver = () => {
 if (selectEl) {
   selectEl.addEventListener("change", () => {
     let selectedValue = selectEl.value;
-    // selectEl.classList.add("non");
-    selectEl.disabled = true;
-    selectEl.classList.add("dull");
-    selectEl.title =
-      "Play new game to change difficulty, Can not change difficulty while playing";
 
     if (selectedValue === "Easy") {
       speed = 150;
@@ -163,10 +188,10 @@ if (selectEl) {
       speed = 60;
     }
 
-    clearInterval(gameloop);
+    // clearInterval(gameloop);
     gameloop = setInterval(initGame, speed);
 
-    selectEl.blur();
+    // selectEl.blur();
   });
 }
 
@@ -177,9 +202,11 @@ pandpIcon.addEventListener("click", () => {
   if (isPlaying) {
     clearInterval(gameloop);
     pandpIcon.src = "play-button.png";
+    sound = false;
   } else {
     gameloop = setInterval(initGame, speed);
     pandpIcon.src = "pause.png";
+    sound = true;
   }
   isPlaying = !isPlaying;
 });
@@ -188,10 +215,12 @@ document.addEventListener("keyup", (e) => {
   if (e.code === "Space") {
     if (isPlaying) {
       clearInterval(gameloop);
+      sound = false;
       pandpIcon.src = "play-button.png";
     } else {
       gameloop = setInterval(initGame, speed);
       pandpIcon.src = "pause.png";
+      sound = true;
     }
     isPlaying = !isPlaying;
   }

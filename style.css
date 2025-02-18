@@ -19,7 +19,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: rgba(221, 221, 221, 66); /* Adjust opacity here */
+  background-color: rgba(221, 221, 221, 66);
   position: relative;
   background-image: linear-gradient(
       rgba(38, 38, 38, 0.7),
@@ -28,7 +28,7 @@ body {
     url(snake.png);
   background-repeat: no-repeat;
   background-size: cover;
-  background-blend-mode: multiply; /* or overlay */
+  background-blend-mode: multiply;
 }
 
 .container {
@@ -43,7 +43,7 @@ body {
 }
 
 .score {
-  width: 80px;
+  width: 100px;
 }
 
 .arrowkeys {
@@ -84,7 +84,6 @@ body {
 
 .playground {
   background-color: rgba(51, 155, 240, 0.9);
-  /* background-color: rgba(38, 38, 38, 0.9); */
   display: grid;
   grid-template: repeat(30, 1fr) / repeat(30, 1fr);
   height: 100%;
@@ -114,8 +113,7 @@ body {
 }
 
 .playground .head {
-  background-color: #40c057;
-  border: 1px solid green;
+  border: 1px solid #555;
   box-shadow: 0px 0px 12px hsla(0, 0%, 47%, 0.5);
   z-index: 999;
 }
@@ -151,7 +149,8 @@ body {
 
 .soundIcon,
 .pandpIcon,
-.againIcon {
+.againIcon,
+.inputColorIcon {
   position: absolute;
   top: 8%;
   right: 2%;
@@ -162,6 +161,7 @@ body {
 }
 
 .popupSound,
+.popupColor,
 .popupAgain,
 .popup {
   position: absolute;
@@ -182,8 +182,21 @@ body {
   top: 14.2%;
 }
 
+.popupColor {
+  top: 20%;
+}
+
 .againIcon {
   top: 14%;
+}
+
+.Icon {
+  top: 20%;
+}
+
+.inputColorIcon {
+  top: 20%;
+  filter: brightness(1) invert(0);
 }
 
 select {
@@ -200,4 +213,31 @@ select {
 .dull {
   filter: invert(20%);
   cursor: not-allowed;
+}
+
+.highscoreWrapper {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  opacity: 1;
+  z-index: 9999999;
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.highScoreText {
+  font-size: 56px;
+  color: #fcc419;
+}
+
+.emoji {
+  font-size: 106px;
 }
