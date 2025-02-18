@@ -61,7 +61,7 @@ const random = () => {
   foodY = Math.floor(Math.random() * 30) + 1;
 };
 
-document.addEventListener("keydown", (e) => {
+const arrowKeysClick = document.addEventListener("keydown", (e) => {
   if (
     e.key === "ArrowUp" ||
     e.key === "ArrowDown" ||
@@ -146,13 +146,13 @@ const initGame = () => {
         class="${className}"
         style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}; background-color:${ChangedColor};"
       ></div>`;
-    // if (
-    //   i !== 0 &&
-    //   snakeBody[0][1] === snakeBody[i][1] &&
-    //   snakeBody[0][0] === snakeBody[i][0]
-    // ) {
-    //   gameOver();
-    // }
+    if (
+      i !== 0 &&
+      snakeBody[0][1] === snakeBody[i][1] &&
+      snakeBody[0][0] === snakeBody[i][0]
+    ) {
+      gameOver();
+    }
   }
 
   playground.innerHTML = htmlMarkup;
@@ -188,10 +188,10 @@ if (selectEl) {
       speed = 60;
     }
 
-    // clearInterval(gameloop);
+    clearInterval(gameloop);
     gameloop = setInterval(initGame, speed);
 
-    // selectEl.blur();
+    selectEl.blur();
   });
 }
 
@@ -202,11 +202,9 @@ pandpIcon.addEventListener("click", () => {
   if (isPlaying) {
     clearInterval(gameloop);
     pandpIcon.src = "play-button.png";
-    sound = false;
   } else {
     gameloop = setInterval(initGame, speed);
     pandpIcon.src = "pause.png";
-    sound = true;
   }
   isPlaying = !isPlaying;
 });
@@ -215,12 +213,10 @@ document.addEventListener("keyup", (e) => {
   if (e.code === "Space") {
     if (isPlaying) {
       clearInterval(gameloop);
-      sound = false;
       pandpIcon.src = "play-button.png";
     } else {
       gameloop = setInterval(initGame, speed);
       pandpIcon.src = "pause.png";
-      sound = true;
     }
     isPlaying = !isPlaying;
   }
