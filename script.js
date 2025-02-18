@@ -57,8 +57,8 @@ document.addEventListener("keydown", (e) => {
 });
 
 const random = () => {
-  foodX = Math.floor(Math.random() * 1) + 15;
-  foodY = Math.floor(Math.random() * 1) + 15;
+  foodX = Math.floor(Math.random() * 30) + 1;
+  foodY = Math.floor(Math.random() * 30) + 1;
 };
 
 document.addEventListener("keydown", (e) => {
