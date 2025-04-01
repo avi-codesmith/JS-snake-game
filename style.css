@@ -92,8 +92,8 @@ body {
 }
 
 .playground .food {
-  width: 20px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   box-shadow: 0px 0px 12px hsla(0, 0%, 47%, 0.5);
   background-color: red;
   border-radius: 50%;
@@ -120,7 +120,7 @@ body {
 
 .playground .mouth {
   position: relative;
-  border: 1px solid #40c057;
+  border: none;
   z-index: 9999;
 }
 
@@ -131,9 +131,9 @@ body {
   align-items: flex-end;
   justify-content: flex-start;
   font-weight: 900;
-  font-size: 12px;
-  height: 6px;
-  width: 6px;
+  font-size: 14px;
+  height: 8px;
+  width: 8px;
   position: absolute;
   bottom: 0px;
   right: 2px;
@@ -240,4 +240,8 @@ select {
 
 .emoji {
   font-size: 106px;
+}
+
+.big {
+  margin: 10px;
 }

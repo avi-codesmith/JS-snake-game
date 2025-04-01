@@ -75,7 +75,7 @@ const arrowKeysClick = document.addEventListener("keydown", (e) => {
     if (sound) {
       moveSound.play();
     }
-    inputColor.disabled = "true";
+    inputColor.disabled = true;
     inputColor.style.cursor = "not-allowed";
     inputColor.title =
       "Play new game to change snake's colour, Can not change Snake's color while playing";
@@ -119,7 +119,6 @@ const initGame = () => {
       localStorage.setItem("highScore", highScore);
 
       if (!highScoreTriggered) {
-        // Run only once
         highScoreTriggered = true;
 
         setTimeout(() => {
